@@ -18,8 +18,18 @@ public class Main {
             forks.add(new ReentrantLock());
         }
         for (int i = 0; i < NUMBER_OF_PHILOSOPHERS; i++) {
-            Philosopher philosopher = new Philosopher(forks.get(i), forks.get((i + 1) % NUMBER_OF_PHILOSOPHERS));
+            ForkPair forkPair = new ForkPair(forks.get(i), forks.get((i + 1) % NUMBER_OF_PHILOSOPHERS));
+            Philosopher philosopher = getPhilosopher(i, forkPair);
             createThread(philosopher, i);
+        }
+    }
+
+
+    private static Philosopher getPhilosopher(int i, ForkPair forkPair) {
+        if (i == 0) {
+            return new SwitchedPhilosopher(forkPair);
+        } else {
+            return new Philosopher(forkPair);
         }
     }
 

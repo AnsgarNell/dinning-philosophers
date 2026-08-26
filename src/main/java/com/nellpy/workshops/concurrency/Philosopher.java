@@ -16,7 +16,13 @@ public class Philosopher implements Runnable {
     protected final Lock secondLock;
 
 
-    public Philosopher(Lock firstLock, Lock secondLock) {
+    public Philosopher(ForkPair forkPair) {
+        this.firstLock = forkPair.firstFork();
+        this.secondLock = forkPair.secondFork();
+    }
+
+
+    protected Philosopher(Lock firstLock, Lock secondLock) {
         this.firstLock = firstLock;
         this.secondLock = secondLock;
     }
@@ -53,7 +59,7 @@ public class Philosopher implements Runnable {
 
 
     private void processOtherFork() {
-        printMessage("tyring to pick up " + getSecondLockName() + " fork");
+        printMessage("trying to pick up " + getSecondLockName() + " fork");
         secondLock.lock();
         try {
             printMessage("eating");
