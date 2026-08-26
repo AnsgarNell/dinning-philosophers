@@ -11,29 +11,29 @@ public class Philosopher implements Runnable {
 
     protected static final String RIGHT = "right";
 
-    protected final Lock firstLock;
+    protected final Lock firstFork;
 
-    protected final Lock secondLock;
+    protected final Lock secondFork;
 
 
     public Philosopher(ForkPair forkPair) {
-        this.firstLock = forkPair.firstFork();
-        this.secondLock = forkPair.secondFork();
+        this.firstFork = forkPair.firstFork();
+        this.secondFork = forkPair.secondFork();
     }
 
 
-    protected Philosopher(Lock firstLock, Lock secondLock) {
-        this.firstLock = firstLock;
-        this.secondLock = secondLock;
+    protected Philosopher(Lock firstFork, Lock secondFork) {
+        this.firstFork = firstFork;
+        this.secondFork = secondFork;
     }
 
 
-    protected String getFirstLockName() {
+    protected String getFirstForkName() {
         return LEFT;
     }
 
 
-    protected String getSecondLockName() {
+    protected String getSecondForkName() {
         return RIGHT;
     }
 
@@ -48,24 +48,24 @@ public class Philosopher implements Runnable {
 
 
     private void eat() {
-        firstLock.lock();
-        printMessage(getFirstLockName() + " fork picked up");
+        firstFork.lock();
+        printMessage(getFirstForkName() + " fork picked up");
         try {
             processOtherFork();
         } finally {
-            firstLock.unlock();
+            firstFork.unlock();
         }
     }
 
 
     private void processOtherFork() {
-        printMessage("trying to pick up " + getSecondLockName() + " fork");
-        secondLock.lock();
+        printMessage("trying to pick up " + getSecondForkName() + " fork");
+        secondFork.lock();
         try {
             printMessage("eating");
             delay();
         } finally {
-            secondLock.unlock();
+            secondFork.unlock();
         }
     }
 

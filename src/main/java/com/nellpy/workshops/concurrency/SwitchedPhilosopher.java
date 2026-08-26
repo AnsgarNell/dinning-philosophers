@@ -10,13 +10,13 @@ public class SwitchedPhilosopher extends Philosopher {
 
 
     @Override
-    protected String getFirstLockName() {
+    protected String getFirstForkName() {
         return RIGHT;
     }
 
 
     @Override
-    protected String getSecondLockName() {
+    protected String getSecondForkName() {
         return LEFT;
     }
 }
